@@ -112,6 +112,9 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should limit the search time to be less than 5 seconds when finding a person.
+6. Should be able to display list of people page by page.
+7. Should have a user-friendly interface.
 
 ## Appendix D : Glossary
 
