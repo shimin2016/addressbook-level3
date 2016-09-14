@@ -58,7 +58,34 @@ Priority | As a ... | I want to ... | So that I can...
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
-#### Use case: Delete person
+#### Use case: Rename Tag
+
+**MSS**
+
+1. User requests to list existing tags
+2. AddressBook shows a list of existing tags
+3. User requests to rename an existing tag
+4. AddressBook confirms with user to rename tag
+5. User confirms
+6. AddressBook renames tag
+Use case ends.
+
+**Extensions**
+
+2a. The list is empty
+
+> Use case ends
+
+3a. The given index is invalid
+
+> 3a1. AddressBook shows an error message <br>
+  Use case resumes at step 2
+
+4a. User does not confirm 
+
+>Use case resumes at step 2
+  
+  #### Use case: Delete person
 
 **MSS**
 
