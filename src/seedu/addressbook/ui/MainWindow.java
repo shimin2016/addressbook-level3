@@ -31,7 +31,8 @@ public class MainWindow {
     }
 
     public void setMainApp(Stoppable mainApp){
-        this.mainApp = mainApp;
+        this.mainApp = mainApp;      
+        commandInput.setText("Help");      
     }
 
     @FXML
