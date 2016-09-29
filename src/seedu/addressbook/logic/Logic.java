@@ -11,12 +11,16 @@ import seedu.addressbook.storage.Storage;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.ArrayList;
 
 /**
  * Represents the main Logic of the AddressBook.
  */
 public class Logic {
 
+    public static final int INITIAL_STORAGE_INDEX = 0;
+    public static final String TYPE_OF_STORAGE_FILE = "Storage File 1";
+    private ArrayList<Storage> storage_list = new ArrayList<Storage>();
 
     private Storage storage;
     private AddressBook addressBook;
@@ -25,13 +29,21 @@ public class Logic {
     private List<? extends ReadOnlyPerson> lastShownList = Collections.emptyList();
 
     public Logic() throws Exception{
-        setStorage(initializeStorage());
-        setAddressBook(storage.load());
+/*        setStorage(initializeStorage());
+        setAddressBook(storage.load());*/
+        addStorage(initializeStorage(TYPE_OF_STORAGE_FILE));
+        setStorage(storage_list.get(INITIAL_STORAGE_INDEX));
+        setAddressBook(storage_list.get(INITIAL_STORAGE_INDEX).load());
     }
 
     Logic(Storage storageFile, AddressBook addressBook){
+        addStorage(storageFile);
         setStorage(storageFile);
         setAddressBook(addressBook);
+    }
+
+    void addStorage(Storage newStorage){
+        storage_list.add(newStorage);
     }
 
     void setStorage(Storage storage){
@@ -46,12 +58,17 @@ public class Logic {
      * Creates the Storage object based on the user specified path (if any) or the default storage path.
      * @throws Storage.InvalidStorageFilePathException if the target file path is incorrect.
      */
-    private Storage initializeStorage() throws StorageFile.InvalidStorageFilePathException {
-        return new StorageFile();
+    private Storage initializeStorage(String storageType) throws StorageFile.InvalidStorageFilePathException {
+        switch(storageType) {
+        case TYPE_OF_STORAGE_FILE:
+            //return other type of storage file
+        default:
+            return new StorageFile();
+        }
     }
 
-    public String getStorageFilePath() {
-        return storage.getPath();
+    public String getStorageFilePath(int storageIndex) {
+        return storage_list.get(storageIndex).getPath();
     }
 
     /**
@@ -86,7 +103,9 @@ public class Logic {
     private CommandResult execute(Command command) throws Exception {
         command.setData(addressBook, lastShownList);
         CommandResult result = command.execute();
-        storage.save(addressBook);
+        for (Storage storage : storage_list) {
+            storage.save(addressBook);
+        }
         return result;
     }
 
